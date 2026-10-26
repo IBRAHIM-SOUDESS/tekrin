@@ -15,6 +15,9 @@ $RECYCLE.BIN/
 .env
 .env.local
 
+# Nested accidental folders
+/www/
+
 # User uploads & cache (preserve folder structure with .gitkeep)
 /assets/uploads/*
 !/assets/uploads/.gitkeep

@@ -1,1 +1,0 @@
-<?php require_once __DIR__ . '/../includes/functions.php'; ensureSession(); unset($_SESSION['admin']); header('Location: ' . base('admin/login.php'));
