@@ -6,7 +6,7 @@ if (isLoggedIn()) {
     if ($_SESSION['onboarding_completed']) {
         redirect('feed.php');
     } else {
-        redirect('onboarding.php');
+        redirect('wizard.php?step=1');
     }
 }
 
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($_SESSION['onboarding_completed']) {
             redirect('feed.php');
         } else {
-            redirect('onboarding.php');
+            redirect('wizard.php?step=1');
         }
     } else {
         $error = "Email ou mot de passe incorrect.";

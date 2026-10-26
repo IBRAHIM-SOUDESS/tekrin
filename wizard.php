@@ -20,6 +20,11 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
+if (!$user) {
+    session_destroy();
+    redirect('login.php');
+}
+
 // Traitement des formulaires par étape
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     switch ($step) {
@@ -41,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (in_array($_FILES['profile_picture']['type'], $allowed_types)) {
                     $extension = pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION);
                     $new_file_name = "profile_" . $user_id . "_" . time() . "." . $extension;
-                    $upload_dir = 'assets/images/profiles/';
+                    $upload_dir = 'assets/uploads/profiles/';
                     if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
                     
                     if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $upload_dir . $new_file_name)) {
@@ -107,16 +112,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         case 7: // Portfolio & Finalize
             if (isset($_FILES['portfolio_image']) && $_FILES['portfolio_image']['error'] === UPLOAD_ERR_OK) {
-                $allowed_types = ['image/jpeg', 'image/png', 'image/jpg'];
+                $allowed_types = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
                 if (in_array($_FILES['portfolio_image']['type'], $allowed_types)) {
                     $extension = pathinfo($_FILES['portfolio_image']['name'], PATHINFO_EXTENSION);
-                    $new_file_name = "portfolio_" . $user_id . "_" . time() . "." . $extension;
-                    $upload_dir = 'assets/images/portfolio/';
+                    $new_file_name = "project_" . $user_id . "_" . time() . "." . $extension;
+                    
+                    // On stocke dans le dossier des posts pour que ça apparaisse correctement dans le feed
+                    $upload_dir = 'assets/uploads/posts/';
                     if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
                     
                     if (move_uploaded_file($_FILES['portfolio_image']['tmp_name'], $upload_dir . $new_file_name)) {
+                        // 1. Ajouter au portfolio (on stocke le chemin relatif complet)
+                        $portfolio_path = 'assets/uploads/posts/' . $new_file_name;
                         $stmt = $pdo->prepare("INSERT INTO portfolio (user_id, image_path) VALUES (?, ?)");
-                        $stmt->execute([$user_id, $new_file_name]);
+                        $stmt->execute([$user_id, $portfolio_path]);
+                        
+                        // 2. Créer un post automatique sur le fil d'actualité
+                        $welcome_content = "Je viens de rejoindre TEKRIN ! Voici l'une de mes réalisations en tant que " . ($user['profession'] ?? 'professionnel') . ".";
+                        $images_json = json_encode([$new_file_name]);
+                        $stmt_post = $pdo->prepare("INSERT INTO posts (user_id, content, images, type) VALUES (?, ?, ?, 'project')");
+                        $stmt_post->execute([$user_id, $welcome_content, $images_json]);
                     }
                 }
             }
@@ -125,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare("UPDATE users SET onboarding_completed = 1 WHERE id = ?");
             $stmt->execute([$user_id]);
             $_SESSION['onboarding_completed'] = 1;
-            setFlashMessage("Configuration terminée ! Bienvenue sur votre fil d'actualité.", "success");
+            setFlashMessage("Configuration terminée ! Votre première réalisation a été publiée sur votre fil d'actualité.", "success");
             redirect('feed.php');
             break;
     }
@@ -159,19 +174,55 @@ require_once 'includes/header.php';
                     <h2 style="margin-bottom: 10px;">Quelle est votre profession ?</h2>
                     <p style="color: var(--text-muted); margin-bottom: 30px;">Dites-nous ce que vous faites pour que les clients puissent vous trouver.</p>
                     
-                    <div class="form-group">
-                        <label>Votre métier</label>
-                        <input type="text" name="profession" placeholder="Ex: Électricien bâtiment, Menuisier..." required value="<?php echo htmlspecialchars($user['profession'] ?? ''); ?>">
+                    <div class="form-group" style="margin-bottom: 24px; text-align: left;">
+                        <label for="profession" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark-bg);">Votre métier</label>
+                        <div class="input-wrapper" style="position: relative;">
+                            <i data-lucide="briefcase" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 18px;"></i>
+                            <input type="text" id="profession" name="profession" placeholder="Ex: Électricien, Plombier, Développeur..." required value="<?php echo htmlspecialchars($user['profession'] ?? ''); ?>" style="width: 100%; padding: 12px 12px 12px 48px; border: 1px solid #e2e8f0; border-radius: 12px;">
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Type de profil</label>
-                        <select name="role" required>
-                            <option value="technicien" <?php echo ($user['role'] == 'technicien') ? 'selected' : ''; ?>>Technicien</option>
-                            <option value="artisan" <?php echo ($user['role'] == 'artisan') ? 'selected' : ''; ?>>Artisan</option>
-                            <option value="entreprise" <?php echo ($user['role'] == 'entreprise') ? 'selected' : ''; ?>>Entreprise</option>
-                        </select>
+                    <div class="form-group" style="margin-bottom: 24px; text-align: left;">
+                        <label style="display: block; margin-bottom: 12px; font-weight: 600; color: var(--dark-bg);">Type de profil</label>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                            <label class="role-card <?php echo ($user['role'] == 'technicien') ? 'active' : ''; ?>" style="cursor: pointer; border: 2px solid #e2e8f0; border-radius: 15px; padding: 15px; text-align: center; transition: all 0.3s ease;">
+                                <input type="radio" name="role" value="technicien" <?php echo ($user['role'] == 'technicien') ? 'checked' : ''; ?> style="display: none;">
+                                <i data-lucide="tool" style="width: 24px; height: 24px; margin-bottom: 8px; color: var(--primary-blue);"></i>
+                                <span style="display: block; font-size: 13px; font-weight: 600;">Technicien</span>
+                            </label>
+                            <label class="role-card <?php echo ($user['role'] == 'artisan') ? 'active' : ''; ?>" style="cursor: pointer; border: 2px solid #e2e8f0; border-radius: 15px; padding: 15px; text-align: center; transition: all 0.3s ease;">
+                                <input type="radio" name="role" value="artisan" <?php echo ($user['role'] == 'artisan') ? 'checked' : ''; ?> style="display: none;">
+                                <i data-lucide="hammer" style="width: 24px; height: 24px; margin-bottom: 8px; color: var(--primary-blue);"></i>
+                                <span style="display: block; font-size: 13px; font-weight: 600;">Artisan</span>
+                            </label>
+                            <label class="role-card <?php echo ($user['role'] == 'entreprise') ? 'active' : ''; ?>" style="cursor: pointer; border: 2px solid #e2e8f0; border-radius: 15px; padding: 15px; text-align: center; transition: all 0.3s ease;">
+                                <input type="radio" name="role" value="entreprise" <?php echo ($user['role'] == 'entreprise') ? 'checked' : ''; ?> style="display: none;">
+                                <i data-lucide="building-2" style="width: 24px; height: 24px; margin-bottom: 8px; color: var(--primary-blue);"></i>
+                                <span style="display: block; font-size: 13px; font-weight: 600;">Entreprise</span>
+                            </label>
+                        </div>
                     </div>
+
+                    <style>
+                    .role-card.active {
+                        border-color: var(--primary-blue) !important;
+                        background: rgba(21, 101, 192, 0.05);
+                    }
+                    .role-card:hover {
+                        border-color: var(--primary-blue);
+                        background: #f8fafc;
+                    }
+                    </style>
+
+                    <script>
+                    document.querySelectorAll('.role-card').forEach(card => {
+                        card.addEventListener('click', function() {
+                            document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
+                            this.classList.add('active');
+                            this.querySelector('input').checked = true;
+                        });
+                    });
+                    </script>
 
                 <?php elseif ($step == 2): ?>
                     <h2 style="margin-bottom: 10px;">Ajoutez une photo de profil</h2>
@@ -181,7 +232,7 @@ require_once 'includes/header.php';
                         <div class="avatar-upload">
                             <div class="avatar-preview" id="preview-box">
                                 <?php if (!empty($user['profile_picture'])): ?>
-                                    <img src="assets/images/profiles/<?php echo $user['profile_picture']; ?>" alt="Avatar">
+                                    <img src="assets/uploads/profiles/<?php echo $user['profile_picture']; ?>" alt="Avatar">
                                 <?php else: ?>
                                     <div class="avatar-placeholder"><i data-lucide="user" style="width: 48px; height: 48px;"></i></div>
                                 <?php endif; ?>

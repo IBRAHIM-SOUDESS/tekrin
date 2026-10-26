@@ -3,7 +3,7 @@ require_once 'includes/auth.php';
 
 // Rediriger si déjà connecté
 if (isLoggedIn()) {
-    redirect('onboarding.php');
+    redirect('wizard.php?step=1');
 }
 
 $errors = [];
@@ -13,15 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = sanitize($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
-    $role = sanitize($_POST['role'] ?? '');
 
-    $result = registerUser($fullname, $email, $password, $confirm_password, $role);
+    $result = registerUser($fullname, $email, $password, $confirm_password);
 
     if (is_numeric($result)) {
         // Connexion automatique après inscription
         $_SESSION['user_id'] = $result;
         $_SESSION['user_fullname'] = $fullname;
-        $_SESSION['user_role'] = $role;
+        $_SESSION['user_role'] = 'technicien'; // Rôle par défaut, sera mis à jour dans le wizard
         $_SESSION['user_email'] = $email;
         $_SESSION['user_avatar'] = null;
         $_SESSION['onboarding_completed'] = 0;
@@ -74,20 +73,6 @@ require_once 'includes/header.php';
                 </div>
 
                 <div class="form-group">
-                    <label for="role">Type de compte</label>
-                    <div class="input-wrapper">
-                        <i data-lucide="briefcase" class="input-icon"></i>
-                        <select id="role" name="role" required>
-                            <option value="">Sélectionnez votre profil</option>
-                            <option value="technicien" <?php echo (isset($role) && $role === 'technicien') ? 'selected' : ''; ?>>Technicien</option>
-                            <option value="artisan" <?php echo (isset($role) && $role === 'artisan') ? 'selected' : ''; ?>>Artisan</option>
-                            <option value="entreprise" <?php echo (isset($role) && $role === 'entreprise') ? 'selected' : ''; ?>>Entreprise</option>
-                        </select>
-                    </div>
-                    <small class="error-text" id="role-error"><?php echo $errors['role'] ?? ''; ?></small>
-                </div>
-
-                <div class="form-group">
                     <label for="password">Mot de passe</label>
                     <div class="input-wrapper">
                         <i data-lucide="lock" class="input-icon"></i>
@@ -113,6 +98,12 @@ require_once 'includes/header.php';
                     </div>
                     <small class="error-text" id="confirm_password-error"><?php echo $errors['confirm_password'] ?? ''; ?></small>
                 </div>
+            </div>
+
+            <div class="form-legal-notice" style="margin: 20px 0; font-size: 13px; color: var(--text-muted); text-align: center;">
+                En cliquant sur "Créer mon compte", vous acceptez nos 
+                <a href="terms.php" style="color: var(--primary-blue); font-weight: 600;">Conditions d'utilisation</a> et notre 
+                <a href="privacy.php" style="color: var(--primary-blue); font-weight: 600;">Politique de confidentialité</a>.
             </div>
 
             <button type="submit" class="btn btn-register btn-block" style="width: 100%; margin-top: 10px; padding: 16px;">

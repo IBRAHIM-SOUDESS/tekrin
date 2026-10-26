@@ -1,0 +1,170 @@
+/* Style global simple et propre */
+body {
+    background-image:
+        linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
+        radial-gradient(1200px 600px at -10% -10%, rgba(37, 99, 235, 0.08), transparent 60%),
+        radial-gradient(800px 400px at 110% 0%, rgba(16, 185, 129, 0.06), transparent 60%),
+        radial-gradient(900px 500px at 100% 110%, rgba(99, 102, 241, 0.06), transparent 60%),
+        url('bg-livracam.jpg');
+    background-color: #f3f4f6;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+    font-family: 'Inter', Roboto, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #111827;
+}
+
+[data-theme="dark"] body,
+[data-theme="dark"] {
+    background-image:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        radial-gradient(1000px 500px at -10% -10%, rgba(37, 99, 235, 0.10), transparent 60%),
+        radial-gradient(700px 350px at 110% 0%, rgba(16, 185, 129, 0.08), transparent 60%),
+        radial-gradient(800px 450px at 100% 110%, rgba(99, 102, 241, 0.08), transparent 60%),
+        url('bg-livracam.jpg');
+    background-color: #0f1115;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+    color: #e9ecef;
+}
+[data-theme="dark"] .card {
+    background-color: #1e1e1e;
+    color: #e9ecef;
+    box-shadow: none;
+}
+[data-theme="dark"] .card-header {
+    background-color: #0a58ca;
+    color: #fff;
+}
+[data-theme="dark"] .table {
+    color: #e9ecef;
+}
+[data-theme="dark"] .status-badge {
+    filter: brightness(0.9);
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: none;
+    margin-bottom: 20px;
+    border-radius: 12px;
+}
+
+.with-sidebar {
+    margin-left: 260px;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    padding: 16px;
+}
+.sidebar .menu a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: #111827;
+    text-decoration: none;
+}
+.sidebar .menu a:hover {
+    background: #eef2ff;
+    color: #2563eb;
+}
+.topbar {
+    background: #2563eb;
+    color: #fff;
+}
+.topbar .form-control {
+    border-radius: 12px;
+}
+.badge-status {
+    border-radius: 9999px;
+    font-weight: 600;
+    padding: 6px 10px;
+}
+
+.card-header {
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+    font-weight: bold;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.status-Collecté { background-color: #6c757d; color: white; }
+.status-En-transit { background-color: #ffc107; color: black; }
+.status-Arrivé-au-dépôt { background-color: #fb923c; color: black; }
+.status-Livré { background-color: #22c55e; color: white; }
+.status-Collecté { background-color: #2563eb; color: white; }
+
+.tracking-result {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.qr-code-img {
+    max-width: 150px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Timeline */
+.timeline {
+    border-left: 3px solid #e9ecef;
+    margin-left: 10px;
+    padding-left: 30px;
+    list-style: none;
+}
+.timeline-item {
+    position: relative;
+    margin-bottom: 25px;
+}
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -39px;
+    top: 5px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 4px solid #0d6efd;
+    border-radius: 50%;
+}
+.timeline-date {
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-bottom: 3px;
+    display: block;
+}
+.timeline-status {
+    font-weight: bold;
+    color: #333;
+}
+.timeline-desc {
+    color: #555;
+    font-size: 0.95em;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(37,99,235,0.03);
+}

@@ -54,12 +54,12 @@ try {
         $uploadPath = $uploadDir . $fileName;
         
         if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-            $stmt_old = $pdo->prepare("SELECT cover_photo FROM users WHERE id = ?");
+            $stmt_old = $pdo->prepare("SELECT cover_image FROM users WHERE id = ?");
             $stmt_old->execute([$user_id]);
             $old = $stmt_old->fetchColumn();
             if ($old && file_exists($old)) @unlink($old);
 
-            $stmt = $pdo->prepare("UPDATE users SET cover_photo = ? WHERE id = ?");
+            $stmt = $pdo->prepare("UPDATE users SET cover_image = ? WHERE id = ?");
             $stmt->execute([$uploadPath, $user_id]);
             echo json_encode(['success' => true, 'path' => $uploadPath]);
         } else {

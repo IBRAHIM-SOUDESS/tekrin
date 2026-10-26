@@ -1,0 +1,568 @@
+/* ==================================== */
+/* 0. RÉINITIALISATION ET FONDAMENTAUX */
+/* ==================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Charte Graphique ETS KAMAL */
+    --couleur-primaire: #664200;    /* Bleu Cobalt (Texte principal, fond foncé) */
+    --couleur-secondaire: #28A745;  /* Vert Éclatant (CTA, Succès) */
+    --couleur-texte: #333;          /* Noir/Gris foncé */
+    --couleur-fond-clair: #f8f9fa;  /* Gris très clair (fond de sections) */
+    --couleur-claire: white;        /* Blanc pur */
+
+    /* Polices et Comportement */
+    --font-titres: 'Montserrat', sans-serif;
+    --font-texte: 'Roboto', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+{
+    /* mettre tous les elements a 'border-box simplifier la gestion des marges */
+    box-sizing: border-box;
+    margin;0;
+    padding:0;
+}
+body {
+    font-family: arial;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px; 
+    margin: auto; 
+}
+
+h1, h2, h3 {
+    margin-bottom: 15px;
+    color: #0056b3;
+    font-family: var(--font-titres);
+    font-weight: 700;
+}
+
+a {
+    color: #0056b3;
+    text-decoration: none; 
+    transition: color 0.3s;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--couleur-secondaire);
+    color: var(--couleur-claire);
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: background-color 0.3s, transform 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #1a7c36;
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+main section {
+    padding: 80px 0;
+}
+
+/* ==================================== */
+/* 1. HEADER (ENTÊTE ET NAVIGATION) */
+/* ==================================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+logo img{
+    height: 60px;
+    width: auto;
+}
+nav a {
+    margin-left: 25px;
+    font-weight: bold;
+}
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+/* STYLE DU LOGO (Maintenant conteneur pour l'image) */
+.logo {
+    color: var(--couleur-primaire);
+    transition: opacity 0.3s; 
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+/* NOUVEAU STYLE: Taille du logo image dans l'entête */
+.logo-image-header {
+    height: 245px; /* Taille par défaut sur desktop */
+    width: auto;
+    display: block; 
+}
+/* FIN DU STYLE LOGO IMAGE */
+
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.main-nav ul li {
+    margin-left: 20px;
+}
+
+.main-nav ul li a.cta-link {
+    color: var(--couleur-secondaire);
+    border: 2px solid var(--couleur-secondaire);
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.main-nav ul li a.cta-link:hover {
+    background-color: var(--couleur-secondaire);
+    color: var(--couleur-claire);
+    text-decoration: none;
+}
+
+/* --- Style du bouton burger (caché par défaut) --- */
+.burger-menu {
+    display: none; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 2000; 
+}
+
+.burger-menu .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--couleur-primaire);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Burger Animation (pour le X) */
+.burger-menu.active .bar:nth-child(2) {
+    opacity: 0;
+}
+.burger-menu.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.burger-menu.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+
+/* ==================================== */
+/* 2. SECTION HÉRO (#accueil) */
+/* ==================================== */
+.hero {
+    background: var(--couleur-primaire) url('placeholder_hero.jpg') no-repeat center center/cover; 
+    color: var(--couleur-claire);
+    padding: 120px 0 50px 0; 
+    text-align: center;
+    position: relative;
+    box-shadow: inset 0 0 0 1000px rgba(0, 51, 102, 0.8); 
+}
+
+.hero h1 {
+    font-size: 3em;
+    color: var(--couleur-claire);
+    margin-bottom: 15px;
+}
+
+.hero .subtitle {
+    font-size: 1.3em;
+    font-weight: 400;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+}
+
+.hero h1 strong {
+    color: var(--couleur-secondaire);
+}
+
+/* STYLE: Bande de crédibilité */
+.credibility-strip {
+    background-color: rgba(255, 255, 255, 0.1); 
+    color: var(--couleur-claire);
+    padding: 15px 0;
+    margin-top: 50px;
+    border-radius: 5px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-style: italic;
+}
+
+.credibility-strip p {
+    font-size: 1.1em;
+}
+
+/* ==================================== */
+/* 3. PARTENAIRES DE MARQUE */
+/* ==================================== */
+.partners-strip {
+    padding: 30px 0;
+    text-align: center;
+    background-color: var(--couleur-claire);
+    border-bottom:1px solid var(--couleur-fond-clair);
+}
+
+.partners-strip h3 {
+    color: var(--couleur-texte);
+    font-size: 1em;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.partner-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+    gap: 100px;
+}
+
+.partner-logo {
+    height: 190px; 
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.partner-logo:hover {
+    opacity: 1;
+}
+
+
+/* ==================================== */
+/* 4. APERÇU DES SERVICES (#services) */
+/* ==================================== */
+.services-apercu {
+    background-color: var(--couleur-fond-clair);
+    text-align: center;
+}
+
+.services-apercu h2 {
+    margin-bottom: 40px;
+}
+
+.service-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 30px;
+}
+
+.card {
+    background-color: var(--couleur-claire);
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 14px 102px rgba(0, 0, 0, 0.08); 
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h4 {
+    color: var(--couleur-primaire);
+    font-size: 1.3em;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.card .icon {
+    width: 260px; 
+    height: auto;
+}
+
+/* ==================================== */
+/* 5. À PROPOS (#a-propos) */
+/* ==================================== */
+.about {
+    background-color: var(--couleur-claire);
+}
+
+.about h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.about p {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+}
+
+.values-list {
+    list-style: none;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-left: 20px;
+}
+
+.values-list li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+    font-size: 1.1em;
+}
+
+.values-list li::before {
+    content: "✔️"; 
+    color: var(--couleur-secondaire);
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+}
+
+/* ==================================== */
+/* 6. CONTACT (#contact) */
+/* ==================================== */
+.contact-form {
+    background-color: var(--couleur-fond-clair);
+    text-align: center;
+}
+
+.contact-form h2 {
+    margin-bottom: 20px;
+}
+
+.contact-form > p {
+    margin-bottom: 25px;
+}
+
+#devisForm {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+    padding: 30px;
+    background: var(--couleur-claire);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--couleur-primaire);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: var(--font-texte);
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--couleur-secondaire);
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.contact-info {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1.1em;
+    color: var(--couleur-primaire);
+}
+
+.contact-info a {
+    color: var(--couleur-primaire);
+    text-decoration: underline;
+}
+
+/* Messages d'erreur et de statut */
+.error-message {
+    color: red;
+    font-size: 0.85em;
+    display: block;
+    margin-top: 5px;
+}
+
+.status-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.status-message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* ==================================== */
+/* 7. FOOTER (PIED DE PAGE) */
+/* ==================================== */
+footer {
+    background-color: var(--couleur-primaire);
+    color: var(--couleur-fond-clair);
+    padding: 20px 0;
+    font-size: 0.9em;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer a {
+    color: var(--couleur-fond-clair);
+    margin-left: 15px;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: var(--couleur-secondaire);
+}
+
+/* ==================================== */
+/* 8. MEDIA QUERIES (RESPONSIVE) */
+/* ==================================== */
+
+@media (max-width: 768px) {
+    /* Afficher le bouton burger sur mobile */
+    .burger-menu {
+        display: block;
+    }
+
+    /* Ajustement de la taille du logo image sur mobile */
+    .logo-image-header {
+        height: 35px; /* Légèrement plus petit sur mobile */
+    }
+
+    /* Ajustement de la taille du titre Héro sur mobile */
+    .hero {
+        padding: 60px 0 30px 0;
+    }
+    
+    .hero h1 {
+        font-size: 2em;
+    }
+
+    .credibility-strip {
+        padding: 10px;
+        font-size: 1em;
+    }
+
+    .partner-logos {
+        gap: 15px;
+    }
+
+    .partner-logo {
+        height: 30px; 
+    }
+
+    /* Masquer la navigation par défaut et la préparer pour le mobile */
+    .main-nav {
+        position: absolute;
+        top: 60px; 
+        left: 0;
+        width: 100%;
+        max-height: 0; 
+        overflow: hidden; 
+        background-color: var(--couleur-primaire); 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: max-height 0.3s ease-in-out;
+        z-index: 1000;
+    }
+    
+    .main-nav.open {
+        max-height: 300px; 
+    }
+
+    .main-nav ul {
+        flex-direction: column; 
+        padding: 15px 0;
+    }
+
+    .main-nav ul li {
+        margin: 0;
+        text-align: center;
+    }
+
+    .main-nav ul li a {
+        color: var(--couleur-claire); 
+        display: block;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .main-nav ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--couleur-secondaire);
+    }
+    
+    .main-nav ul li a.cta-link {
+        border: 2px solid var(--couleur-secondaire);
+        margin: 10px auto;
+        width: 80%;
+    }
+    
+    .hero .subtitle {
+        font-size: 1em;
+    }
+    
+    /* Le footer s'affiche sur deux lignes */
+    footer .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    footer .footer-links {
+        margin-top: 10px;
+    }
+
+    footer a {
+        margin: 0 8px;
+    }
+}

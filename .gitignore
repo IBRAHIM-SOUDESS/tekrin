@@ -1,0 +1,30 @@
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment and sensitive config
+.env
+.env.local
+
+# User uploads & cache (preserve folder structure with .gitkeep)
+/assets/uploads/*
+!/assets/uploads/.gitkeep
+/assets/uploads/portfolio/*
+!/assets/uploads/portfolio/.gitkeep
+/assets/uploads/posts/*
+!/assets/uploads/posts/.gitkeep
+/assets/uploads/profiles/*
+!/assets/uploads/profiles/.gitkeep
+
+# Logs and debug files
+*.log
+error_log

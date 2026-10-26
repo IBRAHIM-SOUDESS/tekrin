@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vente et maintenance de matériel informatique, photocopieurs professionnels, et services IT à Yaoundé, Cameroun. Partenaire HP, Dell, Canon, Ricoh.">
+    <title>ETS KAMAL - Vente & Maintenance Informatique et Photocopieurs</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            
+            <a href="#accueil" class="logo">
+                <img src="logo.jpg" alt="Logo de ETS KAMAL" class="logo-image-header">
+            </a>
+            
+            <button class="burger-menu" aria-label="Ouvrir le menu de navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#a-propos">À Propos</a></li>
+                    <li><a href="#contact" class="cta-link">Contact & Devis</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="accueil" class="hero">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <h1>ETS KAMAL Votre partenaire de Confiance en informatique et Impression à Yaoundé</h1>
+                    <p class="subtitle">Vente de matériel informatique, photocopieurs professionnels, et services de maintenance rapides pour entreprises.</p>
+                    <a href="#contact" class="cta-button">Demander un Diagnostic Gratuit</a>
+                </div>
+                
+                <div class="credibility-strip">
+                    <p>DES clients satisfaits  ,notre meilleure publicite</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="partners-strip">
+            <div class="container">
+                <h3>Partenaire Officiel des Grandes Marques</h3>
+                <div class="partner-logos">
+                    <img src="placeholder-hp.jpg" alt="Logo HP" class="partner-logo">
+                    <img src="placeholder-dell.jpg" alt="Logo Dell" class="partner-logo">
+                    <img src="placeholder-canon.jpg" alt="Logo Canon" class="partner-logo">
+                    <img src="placeholder-ricoh.jpg" alt="Logo Ricoh" class="partner-logo">
+                </div>
+            </div>
+        </section>
+
+
+        <section id="services" class="services-apercu">
+            <div class="container">
+                <h2>Nos domaines d'expertise</h2>
+                <div class="service-cards">
+                    <div class="card">
+                        <img src="placeholder_vente.jpg" alt="Icône Vente et Fourniture de Matériel" class="icon">
+                        <h4>Vente & Fourniture</h4>
+                        <p>PC, serveurs, consommables, et solutions d'impression adaptées à votre activité.</p>
+                        <a href="#contact">Détails</a>
+                    </div>
+                    <div class="card">
+                        <img src="placeholder_maintenance.svg" alt="Icône Maintenance et Réparation Informatique" class="icon">
+                        <h4>Maintenance Informatique</h4>
+                        <p>Dépannage sur site ou à distance, contrats de maintenance préventive et corrective.</p>
+                        <a href="#contact">Intervention</a>
+                    </div>
+                    <div class="card">
+                        <img src="placeholder_copieur.jpg" alt="Icône Photocopieuse Professionnelle" class="icon">
+                        <h4>Installation Photocopieurs</h4>
+                        <p>Installation, paramétrage réseau et maintenance de votre parc de photocopieurs pro.</p>
+                        <a href="#contact">Nos modèles</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="a-propos" class="about">
+            <div class="container">
+                <h2>À Propos de ETS KAMAL</h2>
+                <p>Fondée en **[Année de Fondation]**, ETS KAMAL est dédiée à fournir des solutions technologiques complètes. Notre mission est d'assurer la performance et la fiabilité de vos outils informatiques et d'impression pour vous permettre de vous concentrer sur votre cœur de métier. Nous sommes basés à **Yaoundé** et nous engageons sur :</p>
+                <ul class="values-list">
+                    <li>**Expertise Certifiée** : Des techniciens formés et qualifiés sur les marques HP, Dell, Canon, Ricoh.</li>
+                    <li>**Réactivité Garantie** : Intervention rapide en cas de panne critique dans la région de Yaoundé.</li>
+                    <li>**Transparence Totale** : Devis clairs et prix compétitifs.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-form">
+            <div class="container">
+                <h2>Contact & Demande de Devis</h2>
+                <p>Besoin d'une intervention, de matériel ou d'un conseil ? Remplissez le formulaire ci-dessous :</p>
+                
+                <form id="devisForm">
+                    <div class="form-group">
+                        <label for="nom">Nom / Société *</label>
+                        <input type="text" id="nom" name="nom" required>
+                        <small class="error-message" id="error-nom"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" name="email" required>
+                        <small class="error-message" id="error-email"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="sujet">Sujet de votre demande *</label>
+                        <select id="sujet" name="sujet" required  >
+                          
+                            <option value="vente">Vente de matériel/photocopieur</option>
+                            <option value="maintenance">Demande de maintenance/réparation</option>
+                            <option value="devis">Demande de devis général</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                        <small class="error-message" id="error-sujet"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Votre Message *</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <small class="error-message" id="error-message-field"></small>
+                    </div>
+                    <button type="submit" class="cta-button">Envoyer la demande</button>
+                    <p class="contact-info">
+                        Vous pouvez aussi nous appeler au **694721146** ou nous écrire à **KAMAL750@gmail.com**.<br>
+                        Retrouvez-nous à Yaoundé, en face de  la PJ Elig-Essono.
+                    </p>
+                    <div id="form-status" class="status-message"></div>
+                </form>
+
+            </div>
+        </section>
+        
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>**ETS KAMAL** - Yaoundé, Cameroun | &copy; 2025 Tous droits réservés.</p>
+            <div class="footer-links">
+                <a href="mentions-legales.html">Mentions Légales</a>
+                <a href="politique-confidentialite.html">Politique de Confidentialité</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

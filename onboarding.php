@@ -32,7 +32,7 @@ require_once 'includes/header.php';
 
 <div class="app-container" style="background: var(--grad-soft); min-height: calc(100vh - 80px); display: flex; align-items: center; padding: 40px 20px;">
     <div class="container">
-        <div class="auth-card onboarding-card" style="max-width: 600px; margin: 0 auto;">
+        <div class="auth-card onboarding-card" style="max-width: 600px; margin: 0 auto;" data-reveal>
             <div class="onboarding-content">
                 <div class="welcome-badge">
                     <i data-lucide="sparkles"></i>
@@ -69,10 +69,10 @@ require_once 'includes/header.php';
                 </div>
 
                 <div class="onboarding-actions">
-                    <button class="btn btn-register btn-lg" onclick="startOnboarding()" style="width: 100%;">
+                    <a href="wizard.php?step=1" class="btn btn-register btn-lg" style="width: 100%; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
                         <span>Commencer la configuration</span>
                         <i data-lucide="arrow-right"></i>
-                    </button>
+                    </a>
                 </div>
                 <p class="skip-text" style="text-align: center; margin-top: 16px;">Cela ne prendra que 2 minutes</p>
             </div>
@@ -165,16 +165,6 @@ require_once 'includes/header.php';
     .onboarding-card { padding: 40px; }
 }
 </style>
-
-<script>
-function startOnboarding() {
-    alert("Félicitations ! L'assistant de configuration complet sera disponible dans la prochaine mise à jour.");
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    lucide.createIcons();
-});
-</script>
 
 <?php require_once 'includes/footer.php'; ?>
 

@@ -1,11 +1,11 @@
 <?php
-require_once 'config.php';
-require_once 'functions.php';
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/functions.php';
 
 /**
  * Gère l'inscription d'un nouvel utilisateur
  */
-function registerUser($fullname, $email, $password, $confirm_password, $role) {
+function registerUser($fullname, $email, $password, $confirm_password, $role = 'technicien') {
     global $pdo;
 
     $errors = [];
@@ -26,7 +26,6 @@ function registerUser($fullname, $email, $password, $confirm_password, $role) {
     }
 
     if ($password !== $confirm_password) $errors['confirm_password'] = "Les mots de passe ne correspondent pas.";
-    if (empty($role)) $errors['role'] = "Veuillez sélectionner un type de compte.";
 
     // Vérifier si l'email existe déjà
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");

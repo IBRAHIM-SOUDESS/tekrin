@@ -1,0 +1,77 @@
+GUIDE D'HÉBERGEMENT GRATUIT POUR LIVRA-CAM
+=========================================
+
+Ce guide vous explique comment mettre votre site LIVRA-CAM en ligne gratuitement sur un hébergeur comme InfinityFree ou 000webhost.
+
+ÉTAPE 1 : INSCRIPTION ET CRÉATION DU COMPTE
+-------------------------------------------
+1. Allez sur le site de l'hébergeur (ex: https://www.infinityfree.com ou https://fr.000webhost.com).
+2. Créez un compte gratuit.
+3. Créez un "Nouveau Compte d'Hébergement" (Create Account).
+   - Choisissez un sous-domaine gratuit (ex: livra-cam-projet.rf.gd).
+   - Notez bien le "Label" ou "Username" et le "Mot de passe" générés.
+
+ÉTAPE 2 : CRÉATION DE LA BASE DE DONNÉES EN LIGNE
+-------------------------------------------------
+1. Dans votre panneau de contrôle (Control Panel / cPanel), cherchez la section "DATABASES" ou "BASES DE DONNÉES".
+2. Cliquez sur "MySQL Databases".
+3. Créez une nouvelle base de données :
+   - Nom de la base : ex: "livracam" (L'hébergeur ajoutera souvent un préfixe, ex: "if0_345678_livracam").
+   - Notez ce NOM DE BASE COMPLET.
+   - Notez le NOM D'HÔTE (MySQL Hostname) : souvent "sql123.infinityfree.com" ou "localhost".
+   - Notez le NOM D'UTILISATEUR (MySQL Username) : ex: "if0_345678".
+   - Notez le MOT DE PASSE (MySQL Password) : c'est souvent le même que votre compte ou celui affiché.
+
+ÉTAPE 3 : IMPORTATION DES DONNÉES
+---------------------------------
+1. Toujours dans le panneau, cliquez sur "phpMyAdmin".
+2. Cliquez sur "Connect Now" ou "Enter" à côté de votre nouvelle base de données.
+3. Une fois dans phpMyAdmin :
+   - Cliquez sur l'onglet "Importer".
+   - Cliquez sur "Choisir un fichier".
+   - Sélectionnez le fichier "database.sql" qui se trouve dans le dossier de votre projet LIVRA-CAM sur votre ordinateur.
+   - Cliquez sur "Exécuter" ou "Go" tout en bas.
+   -> Votre base de données est maintenant prête en ligne !
+
+ÉTAPE 4 : ENVOI DES FICHIERS (UPLOAD)
+-------------------------------------
+1. Dans le panneau de contrôle, cherchez "Online File Manager" (Gestionnaire de fichiers) et ouvrez-le.
+2. Ouvrez le dossier "htdocs" ou "public_html".
+   - SUPPRIMEZ les fichiers par défaut s'il y en a (comme index2.html ou default.php).
+3. Cliquez sur le bouton "Upload" (icône de flèche vers le haut) -> "Upload File" ou "Upload Directory".
+4. Envoyez TOUS les fichiers de votre projet :
+   - admin.php
+   - config.php
+   - daily_report.php
+   - generate_qr.php
+   - index.php
+   - login.php
+   - logout.php
+   - print_label.php
+   - Le dossier "assets" (avec style.css)
+   - Le dossier "lib" (si vous l'avez utilisé pour le QR code local, sinon l'API en ligne fonctionnera sans).
+
+ÉTAPE 5 : CONFIGURATION FINALE (TRÈS IMPORTANT)
+-----------------------------------------------
+Une fois les fichiers en ligne, le site ne marchera pas encore car il cherche la base de données sur votre ordinateur. Il faut lui dire où elle est en ligne.
+
+1. Dans le "Online File Manager", faites un clic droit sur le fichier "config.php" qui est maintenant en ligne.
+2. Choisissez "Edit" (Modifier).
+3. Remplacez les lignes de connexion par les infos notées à l'ÉTAPE 2 :
+
+   Exemple :
+   $host = 'sql123.infinityfree.com';      // Remplacez 'localhost' par le MySQL Hostname de l'hébergeur
+   $dbname = 'if0_345678_livracam';        // Le nom complet de la base
+   $username = 'if0_345678';               // Votre MySQL Username
+   $password = 'votre_mot_de_passe';       // Votre mot de passe hébergeur
+
+4. Cliquez sur "Save" (Enregistrer).
+
+ÉTAPE 6 : TESTER
+----------------
+Ouvrez votre navigateur et tapez l'adresse de votre site (ex: livra-cam-projet.rf.gd).
+Tout devrait fonctionner !
+
+COMPTES ADMIN PAR DÉFAUT :
+Utilisateur : admin
+Mot de passe : password123

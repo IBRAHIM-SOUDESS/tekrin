@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Redirection pour les profils professionnels par ID
+# Exemple: /tekrin/pro/5 -> pro.php?id=5
+RewriteRule ^pro/([0-9]+)$ pro.php?id=$1 [L,QSA]
+
+# Redirection pour les profils professionnels par nom (Optionnel/Futur)
+# Exemple: /tekrin/pro/jean-dupont -> pro.php?username=jean-dupont
+RewriteRule ^pro/([a-zA-Z0-9-]+)$ pro.php?username=$1 [L,QSA]
